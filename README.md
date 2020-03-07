@@ -1,6 +1,6 @@
 # future-helm-chart
 
-A helm chart for using R's future package on a kubernetes cluster.
+A helm chart for using R's future package on a Kubernetes cluster. One can think of a helm chart as a package for a Kubernetes cluster.
 
 The future package provides for parallel computation in R on one or more machines.
 
@@ -11,6 +11,15 @@ This helm chart will deploy:
 
  - one RStudio server instance with port 8787 exposed running in a 'scheduler' pod
  - four R workers that you can connect to the scheduler by invoking `future::plan()` in R or RStudio, running on the 'scheduler'.
+
+The following R packages are pre-installed on the cluster (because the helm chart uses the paciorek/future-kubernetes Docker container):
+
+ - future
+ - future.apply
+ - doFuture
+ - remotes
+
+See below for how to modify this chart to change the number of workers and install additional R packages in the cluster.
 
 See [this repository](https://github.com/paciorek/future-kubernetes) for how to use this chart, but if you are familiar with Kubernetes, you can just follow the instructions below to install the helm chart.
 
@@ -33,6 +42,10 @@ Alternatively, to install the chart with a user specified release name, here `my
 ```bash
 helm install --name my-release ./future-helm.tgz 
 ```
+
+## Modifying the chart
+
+
 
 ## Acknowledgments
 
