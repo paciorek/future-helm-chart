@@ -1,0 +1,73 @@
+---
+nameOverride: future
+fullnameOverride: future
+
+scheduler:
+  name: scheduler
+  image:
+    repository: "paciorek/future-kubernetes"
+    tag: 0.1
+    pullPolicy: IfNotPresent
+    # See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    pullSecrets:
+    #  - name: regcred
+  replicas: 1
+  # serviceType: "ClusterIP"
+  # serviceType: "NodePort"
+  serviceType: "LoadBalancer"
+  servicePort: 8787
+  resources: {}
+  #  limits:
+  #    cpu: 1.8
+  #    memory: 6G
+  #  requests:
+  #    cpu: 1.8
+  #    memory: 6G
+  tolerations: []
+  nodeSelector: {}
+  affinity: {}
+  ingress:
+    enabled: false
+    tls: false
+    # secretName: future-r-tls
+    hostname: future-r.example.com
+    annotations:
+      # kubernetes.io/ingress.class: "nginx"
+      # secretName: my-tls-cert
+      # kubernetes.io/tls-acme: "true"
+  rstudio_password: "future"
+  env:
+  #  - name: EXTRA_R_PACKAGES
+  #    value: data.table
+
+
+worker:
+  name: worker
+  image:
+    repository: "paciorek/future-kubernetes"
+    tag: 0.1
+    pullPolicy: IfNotPresent
+    pullSecrets:
+    #  - name: regcred
+  replicas: 4
+  aptPackages: >-
+  default_resources:  # overwritten by resource limits if they exist
+    cpu: 1
+    memory: "4GiB"
+  env:
+  #  - name: EXTRA_R_PACKAGES
+  #    value: data.table
+  resources: {}
+  #  limits:
+  #    cpu: 1
+  #    memory: 3G
+  #    nvidia.com/gpu: 1
+  #  requests:
+  #    cpu: 1
+  #    memory: 3G
+  #    nvidia.com/gpu: 1
+  tolerations: []
+  nodeSelector: {}
+  affinity: {}
+  port: ""
+

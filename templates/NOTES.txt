@@ -1,0 +1,38 @@
+Thank you for installing {{ .Chart.Name | upper }}, released at name: {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}  # information about running pods and this message
+  $ helm get {{ .Release.Name }}     # get full Kubernetes specification
+
+This release includes a future scheduler and {{ .Values.worker.replicas }} future workers.
+
+The RStudio server allows you to connect to a RStudio session from which you can which you can connect to carry out your parallel work. You can get there using the following:
+
+{{- if contains "NodePort" .Values.scheduler.serviceType }}
+
+  export RSTUDIO_SERVER_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath='{.items[0].status.addresses[0].address}')
+  export RSTUDIO_SERVER_PORT=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "future.fullname" . }}-scheduler -o jsonpath='{.spec.ports[0].nodePort}')
+
+{{- else if contains "LoadBalancer" .Values.scheduler.serviceType }}
+
+  export RSTUDIO_SERVER_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "future.fullname" . }}-scheduler -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  export RSTUDIO_SERVER_PORT={{ .Values.scheduler.servicePort }}
+
+{{- else if contains "ClusterIP"  .Values.scheduler.serviceType }}
+
+  export RSTUDIO_SERVER_IP="127.0.0.1"
+  export RSTUDIO_SERVER_PORT=8082
+  kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ template "future.fullname" . }}-scheduler $RSTUDIO_SERVER_PORT:{{ .Values.scheduler.servicePort }} &
+
+{{- end }}
+
+  echo http://$RSTUDIO_SERVER_IP:$RSTUDIO_SERVER_PORT       -- RStudio server
+
+NOTE: It may take a few minutes for the LoadBalancer IP to be available. Until then, the commands above will not work for the LoadBalancer service type.
+You can watch the status by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "future.fullname" . }}-scheduler'
+
+NOTE: It may take a few minutes for the URLs above to be available if EXTRA_R_PACKAGES is specified, 
+because they are installed before their respective services start.
+
+NOTE: The default username and password to login to the RStudio server are `rstudio` and  `future`. To change this password, refer to the RStudio password section in values.yaml, or in the README.md.

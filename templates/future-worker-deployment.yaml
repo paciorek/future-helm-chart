@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "future.fullname" . }}-worker
+  labels:
+    app: {{ template "future.name" . }}
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "future.chart" . }}
+    component: worker
+spec:
+  replicas: {{ .Values.worker.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "future.name" . }}
+      release: {{ .Release.Name | quote }}
+      component: worker
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ template "future.name" . }}
+        release: {{ .Release.Name | quote }}
+        component: worker
+    spec:
+      imagePullSecrets:
+        {{- toYaml .Values.worker.image.pullSecrets | nindent 8 }}
+      containers:
+        - name: {{ template "future.fullname" . }}-worker
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          args:
+            - sh
+            - -c
+            - "Rscript -e 'setup_kube()' && sleep 2419200"
+          ports:
+            - containerPort: 8789
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          env:
+            {{- toYaml .Values.worker.env | nindent 12 }}
+    {{- with .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+

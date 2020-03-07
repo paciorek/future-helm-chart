@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "future.fullname" . }}-scheduler
+  labels:
+    app: {{ template "future.name" . }}
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "future.chart" . }}
+    component: scheduler
+spec:
+  ports:
+    - name: {{ template "future.fullname" . }}-master
+      port: 11562
+      targetPort: 11562
+    - name: {{ template "future.fullname" . }}-rstudio
+      port: {{ .Values.scheduler.servicePort }}
+      targetPort: 8787
+  selector:
+    app: {{ template "future.name" . }}
+    release: {{ .Release.Name | quote }}
+    component: scheduler
+  type: {{ .Values.scheduler.serviceType }}
