@@ -33,7 +33,7 @@ spec:
           args:
             - sh
             - -c
-            - "Rscript -e 'setup_kube()' && sleep 2419200"
+            - "Rscript -e 'setup_kube()' && Rscript --default-packages=datasets,utils,grDevices,graphics,stats,methods -e 'parallel:::.slaveRSOCK()' MASTER=future-scheduler PORT=11562 OUT=/dev/null TIMEOUT=2592000 XDR=TRUE"
           ports:
             - containerPort: 8789
           resources:

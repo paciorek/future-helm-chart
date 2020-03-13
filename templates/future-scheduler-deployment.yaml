@@ -33,7 +33,7 @@ spec:
           args:
             - sh
             - -c
-            - "Rscript -e 'setup_kube(set_Renviron=TRUE)' && PASSWORD={{ .Values.scheduler.rstudio_password }} /init"
+            - "echo R_PARALLEL_PORT=11562 >> /usr/local/lib/R/etc/Renviron &&  Rscript -e 'setup_kube()' && PASSWORD={{ .Values.scheduler.rstudio_password }} /init"
           ports:
             - containerPort: 11562
             - containerPort: 8787
