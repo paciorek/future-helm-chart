@@ -35,7 +35,8 @@ scheduler:
       # kubernetes.io/ingress.class: "nginx"
       # secretName: my-tls-cert
       # kubernetes.io/tls-acme: "true"
-  rstudio_password: "future"
+  RStudioPassword: "future"
+  RfuturePort: 11562
   env:
   #  - name: EXTRA_R_PACKAGES
   #    value: data.table
