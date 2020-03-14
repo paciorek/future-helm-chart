@@ -6,7 +6,7 @@ scheduler:
   name: scheduler
   image:
     repository: "paciorek/future-kubernetes"
-    tag: 0.1
+    tag: 0.2
     pullPolicy: IfNotPresent
     # See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     pullSecrets:
@@ -35,7 +35,8 @@ scheduler:
       # kubernetes.io/ingress.class: "nginx"
       # secretName: my-tls-cert
       # kubernetes.io/tls-acme: "true"
-  rstudio_password: "future"
+  RStudioPassword: "future"
+  RfuturePort: 11562
   env:
   #  - name: EXTRA_R_PACKAGES
   #    value: data.table
@@ -45,7 +46,7 @@ worker:
   name: worker
   image:
     repository: "paciorek/future-kubernetes"
-    tag: 0.1
+    tag: 0.2
     pullPolicy: IfNotPresent
     pullSecrets:
     #  - name: regcred

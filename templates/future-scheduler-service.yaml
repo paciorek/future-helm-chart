@@ -11,11 +11,11 @@ metadata:
 spec:
   ports:
     - name: {{ template "future.fullname" . }}-master
-      port: 11562
-      targetPort: 11562
+      port: {{ .Values.scheduler.RfuturePort }}
+      targetPort: {{ .Values.scheduler.RfuturePort }}
     - name: {{ template "future.fullname" . }}-rstudio
       port: {{ .Values.scheduler.servicePort }}
-      targetPort: 8787
+      targetPort: {{ .Values.scheduler.servicePort }}
   selector:
     app: {{ template "future.name" . }}
     release: {{ .Release.Name | quote }}
