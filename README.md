@@ -17,7 +17,6 @@ The following R packages are pre-installed on the cluster (because the Helm char
  - future
  - future.apply
  - doFuture
- - remotes
 
 See below for how to modify this chart to change the number of workers and install additional R packages in the cluster.
 
