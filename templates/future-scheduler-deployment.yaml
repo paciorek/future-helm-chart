@@ -33,7 +33,7 @@ spec:
           args:
             - sh
             - -c
-            - "echo R_PARALLEL_PORT={{ .Values.scheduler.RfuturePort }} >> /usr/local/lib/R/etc/Renviron && echo USE_KUBERNETES=1 >> /usr/local/lib/R/etc/Renviron && echo R_FUTURE_MAKENODEPSOCK_RSHCMD=echo >> /usr/local/lib/R/etc/Renviron && Rscript -e 'setup_kube()' && PASSWORD={{ .Values.scheduler.RStudioPassword }} /init"
+            - "echo R_PARALLEL_PORT={{ .Values.scheduler.RfuturePort }} >> /usr/local/lib/R/etc/Renviron && Rscript -e 'setup_kube()' && PASSWORD={{ .Values.scheduler.RStudioPassword }} /init"
           ports:
             - containerPort: {{ .Values.scheduler.RfuturePort }}
             - containerPort: {{ .Values.scheduler.servicePort }}
