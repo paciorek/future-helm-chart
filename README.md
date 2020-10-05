@@ -45,9 +45,9 @@ helm install --name my-release ./future-helm.tgz
 
 ## Modifying the chart
 
-To increase the number of R workers (before running `helm install` above) and  edit `values.yaml`. In particular, you'll need to modify the `replicas` line that is in the 'worker' stanza (the block of code under `worker:`. Don't modify the 'replicas' line in the 'scheduler' stanza.
+To increase the number of R workers (before running `helm install` above), edit `values.yaml`. In particular, you'll need to modify the `replicas` line that is in the 'worker' stanza (the block of code under `worker:`. Don't modify the 'replicas' line in the 'scheduler' stanza.
 
-To add additional R packages, edit the `values.yaml` file. Simply modify the lines that look like this:
+To add additional R packages, edit `values.yaml`. Simply modify the lines that look like this:
 
 ```
   env:
