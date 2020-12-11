@@ -8,4 +8,4 @@ maintainers:
 name: future-helm-chart
 sources:
 - https://github.com/paciorek/future-helm-chart
-version: 0.10
+version: 0.11
