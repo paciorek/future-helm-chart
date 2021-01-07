@@ -12,9 +12,9 @@ scheduler:
     pullSecrets:
     #  - name: regcred
   replicas: 1
-  # serviceType: "ClusterIP"
+  serviceType: "ClusterIP"
   # serviceType: "NodePort"
-  serviceType: "LoadBalancer"
+  # serviceType: "LoadBalancer"
   servicePort: 8787
   resources: {}
   #  limits:

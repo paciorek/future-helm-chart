@@ -7,7 +7,7 @@ To learn more about the release, try:
 
 This release includes a future scheduler and {{ .Values.worker.replicas }} future workers.
 
-The RStudio server allows you to connect to a RStudio session from which you can which you can connect to carry out your parallel work. You can get there using the following:
+The RStudio server allows you to connect to a RStudio session from which you can carry out your parallel work. You can get there using the following:
 
 {{- if contains "NodePort" .Values.scheduler.serviceType }}
 
@@ -29,8 +29,12 @@ The RStudio server allows you to connect to a RStudio session from which you can
 
   echo http://$RSTUDIO_SERVER_IP:$RSTUDIO_SERVER_PORT       -- RStudio server
 
+{{- if contains "LoadBalancer" .Values.scheduler.serviceType }}
+
 NOTE: It may take a few minutes for the LoadBalancer IP to be available. Until then, the commands above will not work for the LoadBalancer service type.
 You can watch the status by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "future.fullname" . }}-scheduler'
+
+{{- end }}
 
 NOTE: It may take a few minutes for the URLs above to be available if EXTRA_R_PACKAGES is specified, 
 because they are installed before their respective services start.
