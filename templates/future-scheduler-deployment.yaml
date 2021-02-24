@@ -33,7 +33,7 @@ spec:
           args:
             - sh
             - -c
-            - "echo R_PARALLEL_PORT={{ .Values.scheduler.RfuturePort }} >> /usr/local/lib/R/etc/Renviron && Rscript -e 'setup_kube()' && PASSWORD={{ .Values.scheduler.RStudioPassword }} /init"
+            - "echo R_PARALLEL_PORT={{ .Values.scheduler.RfuturePort }} NUM_FUTURE_WORKERS={{ .Values.worker.replicas }} >> /usr/local/lib/R/etc/Renviron && Rscript -e 'setup_kube()' && PASSWORD={{ .Values.scheduler.RStudioPassword }} /init"
           ports:
             - containerPort: {{ .Values.scheduler.RfuturePort }}
             - containerPort: {{ .Values.scheduler.servicePort }}
