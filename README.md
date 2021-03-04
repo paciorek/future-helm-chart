@@ -30,16 +30,17 @@ For the moment the chart is only available from Github and not from a Helm repo.
 Clone this repository and create a tarball of the chart.
 
 ```bash
-git clone https://github.com/paciorek/future-helm-chart
-cd future-helm-chart
-tar -cvzf future-helm.tgz
-helm install ./future-helm.tgz 
+VERSION=0.1
+helm install --wait my-release https://github.com/paciorek/future-helm-chart/archive/${VERSION}.tar.gz 
 ```
 
-Alternatively, to install the chart with a user specified release name, here `my-release`:
+Alternatively, you can clone the repository containing the chart and then
+install the chart. This will allow you to modify the chart.
 
 ```bash
-helm install --name my-release ./future-helm.tgz 
+git clone https://github.com/paciorek/future-helm-chart
+tar czf future-helm.tgz -C future-helm-chart .
+helm install --wait my-release ./future-helm.tgz
 ```
 
 ## Modifying the chart
