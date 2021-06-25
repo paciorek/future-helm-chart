@@ -33,7 +33,7 @@ spec:
           args:
             - sh
             - -c
-            - "Rscript -e 'setup_kube()' && Rscript --default-packages=datasets,utils,grDevices,graphics,stats,methods -e 'parallel:::.slaveRSOCK()' MASTER=future-scheduler PORT={{ .Values.scheduler.RfuturePort }} OUT=/tmp/rworker.log SETUPTIMEOUT=2592000 TIMEOUT=2592000 XDR=TRUE"
+            - "Rscript -e 'setup_kube()' && Rscript --default-packages=datasets,utils,grDevices,graphics,stats,methods -e 'workRSOCK <- tryCatch(parallel:::.workRSOCK, error=function(e) parallel:::.slaveRSOCK); workRSOCK()' MASTER=future-scheduler PORT={{ .Values.scheduler.RfuturePort }} OUT=/tmp/rworker.log SETUPTIMEOUT=2592000 TIMEOUT=2592000 XDR=TRUE"
           ports:
             - containerPort: 8789
           resources:
