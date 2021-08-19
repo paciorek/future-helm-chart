@@ -46,7 +46,7 @@ worker:
   name: worker
   image:
     repository: "paciorek/future-kubernetes"
-    tag: 0.4
+    tag: 0.5
     pullPolicy: IfNotPresent
     pullSecrets:
     #  - name: regcred
