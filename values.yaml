@@ -6,7 +6,7 @@ scheduler:
   name: scheduler
   image:
     repository: "paciorek/future-kubernetes"
-    tag: 0.4
+    tag: 0.5
     pullPolicy: IfNotPresent
     # See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     pullSecrets:
@@ -50,7 +50,7 @@ worker:
     pullPolicy: IfNotPresent
     pullSecrets:
     #  - name: regcred
-  replicas: 4
+  replicas: 3
   aptPackages: >-
   default_resources:  # overwritten by resource limits if they exist
     cpu: 1
